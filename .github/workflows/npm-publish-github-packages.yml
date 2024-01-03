@@ -22,6 +22,3 @@ jobs:
       run: npm install
 
   
-
-    - name: Deploy to EC2
-      run: scp -r ./dist/* gokul@52.205.229.130:/home/tlspc-099/Downloads/node-app
