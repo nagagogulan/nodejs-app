@@ -12,4 +12,9 @@
     "ejs": "^2.3.4",
     "express": "^4.13.3"
   }
+  "scripts": {
+  "start": "node app.js",
+  "build": "cp -r src/ dist/"
+},
+
 }
