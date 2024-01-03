@@ -1,33 +1,27 @@
+
 name: Deploy to AWS EC2
 
 on:
   push:
     branches:
-      - main
+      - main  # Adjust this according to your main branch name
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 14
+      - name: Install dependencies
+        run: npm install
 
-    - name: Install Dependencies
-      run: npm install
-      
-    - name: Build
-      run: npm run build
-  
-    - name: Deploy to EC2
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      run: |
-        echo "$SSH_PRIVATE_KEY" > ssh_key
-        chmod 600 ssh_key
-        scp -i ssh_key -r ./dist/* username@your-ec2-instance-ip:/path/to/destination/folder
+      - name: Build and test
+        run: npm run build
+
+      - name: Deploy to EC2
+        run: |
+        
+          scp -i path/to/your/key.pem -r ./dist/* ec2-user@your-ec2-ip:/path/to/app
+          ssh -i path/to/your/key.pem ec2-user@your-ec2-ip "cd /path/to/app && npm install && pm2 restart your-app"
