@@ -23,6 +23,6 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} user@your-ec2-instance-ip "cd /path/to/app && git pull origin main && npm install && pm2 restart your-app-name"
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} gokul@52.22.48.83 "cd C:\Users\Nagagogulan\Downloads\node-appp && git pull origin main && npm install && pm2 restart node-appp"
         env:
           NODE_ENV: production
