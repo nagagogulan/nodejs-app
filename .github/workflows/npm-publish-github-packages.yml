@@ -23,7 +23,7 @@ jobs:
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i /path/to/gokul.pem gokul@52.22.48.83 "cd C:\Users\Nagagogulan\Downloads\node-appp && git pull origin main && npm install && pm2 restart node-appp"
+          ssh -o StrictHostKeyChecking=no -i /path/to/gokul.pem gokul@52.22.48.83 "cd /c/Users/Nagagogulan/Downloads/node-appp && git pull origin main && npm install && pm2 restart node-appp"
 
         env:
           NODE_ENV: production
