@@ -24,15 +24,11 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "$EC2_SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          echo "$EC2_SSH_PUBLIC_KEY" > ~/.ssh/id_rsa.pub
-          chmod 644 ~/.ssh/id_rsa.pub
-          ssh-keyscan -H your-ec2-public-ip >> ~/.ssh/known_hosts
+          ssh-keyscan -H 52.22.48.83 >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@your-ec2-public-ip "cd /path/to/your/app && git pull origin main && npm install && pm2 restart your-app-name"
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@52.22.48.83 "cd /path/to/your/app && git pull origin main && npm install && pm2 restart aws-ec2"
         env:
           NODE_ENV: production
