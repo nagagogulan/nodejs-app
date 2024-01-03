@@ -1,34 +1,23 @@
-name: Deploy to EC2
+name: Node.js CI/CD
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
+  build:
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Set up SSH
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -H 52.22.48.83 >> ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
-
-      - name: Deploy to EC2
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@52.22.48.83 "cd /path/to/your/app && git pull origin main && npm install && pm2 restart aws-ec2"
-        env:
-          NODE_ENV: production
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm test
+    - run: pm2 restart backendserver
