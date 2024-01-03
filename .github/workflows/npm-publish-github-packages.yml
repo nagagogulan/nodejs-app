@@ -29,8 +29,4 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           chmod 644 ~/.ssh/id_rsa.pub
 
-      - name: Deploy to EC2
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-gokul@52.22.48.83 "cd /c/Users/Nagagogulan/Downloads/node-appp && git pull origin main && npm install && pm2 restart node-appp"
-        env:
-          NODE_ENV: production
+     
