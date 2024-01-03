@@ -20,16 +20,15 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H your-ec2-public-ip >> ~/.ssh/known_hosts
-          chmod 644 ~/.ssh/known_hosts
+
       - name: Deploy to EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-gokul@52.22.48.83 "cd C:\Users\Nagagogulan\Downloads\node-appp && git pull origin main && npm install && pm2 restart node-appp"
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-gokul@52.22.48.83 "cd /c/Users/Nagagogulan/Downloads/node-appp && git pull origin main && npm install && pm2 restart node-appp"
         env:
-          NODE_ENV: production   
-     
+          NODE_ENV: production
